@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Product A",
+      "description": "This is a detailed description of Product A.",
+      "url": "https://example.com/products/product-a"
+    },
+    {
+      "id": 2,
+      "name": "Service B",
+      "description": "Information about Service B offerings.",
+      "url": "https://example.com/services/service-b"
+    },
+    {
+      "id": 3,
+      "name": "Article C",
+      "description": "An interesting article on various topics.",
+      "url": "https://example.com/articles/article-c"
+    }
+  ],
+  "related_links": {
+    "documentation": "https://example.com/docs",
+    "contact_us": "https://example.com/contact"
+  }
+}
