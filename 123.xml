@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="#stylesheet"?>
+
+<links>
+  <stylesheet id="stylesheet" type="text/xsl">
+    <!-- This XSL turns the XML into clickable HTML -->
+    <xsl:stylesheet version="1.0"
+      xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+      <xsl:template match="/">
+        <html>
+          <head>
+            <title>Clickable Links (XML + XSL)</title>
+            <style>
+              body { font-family: Arial, sans-serif; background: #101010; color: #eee; }
+              a { color: #4da6ff; text-decoration: none; }
+              a:hover { text-decoration: underline; }
+              .link-card { margin: 8px 0; padding: 8px; background: #1a1a1a; border-radius: 6px; }
+            </style>
+          </head>
+          <body>
+            <h2>My Clickable XML Links</h2>
+            <xsl:for-each select="links/link">
+              <div class="link-card">
+                <a href="{@url}" target="_blank">
+                  <xsl:value-of select="."/>
+                </a>
+              </div>
+            </xsl:for-each>
+          </body>
+        </html>
+      </xsl:template>
+    </xsl:stylesheet>
+  </stylesheet>
+
+  <link url="https://example.com">Example Website</link>
+  <link url="https://github.com">GitHub</link>
+  <link url="https://jsdelivr.com">jsDelivr</link>
+</links>
