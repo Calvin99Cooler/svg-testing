@@ -1,9 +1,0 @@
-<Module>
-<ModulePrefs title="eeee"/>
-<Content type="html">
-<![CDATA[ <html> <div id="c"></div>
-<script>
-fetch('https://cdn.jsdelivr.net/gh/Calvin99Cooler/never@main/htmlviewer.html.txt ').then(r=>r.text()).then(h=>{document.getElementById('c').innerHTML=h});
-</script> </html> ]]>
-</Content>
-</Module>
