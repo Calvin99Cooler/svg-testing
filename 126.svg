@@ -12,23 +12,27 @@
       padding: 10px;
       box-sizing: border-box;
       height: 80vh;
-      overflow-y: auto;
+      overflow: hidden; /* remove scrollbars */
       border: 1px solid #ccc;
     }
     h1 { font-size: 28px; margin: 0 0 12px 0; color: black; }
     input {
       padding: 5px 8px;
       font-size: 16px;
-      margin-left: 10px;
       width: 250px;
+      margin-left: 10px;
     }
     .controls {
       display: flex;
       align-items: center;
       margin-bottom: 10px;
+      gap: 10px;
     }
-    .controls label {
-      font-weight: bold;
+    .controls label { font-weight: bold; }
+    button {
+      padding: 5px 10px;
+      font-size: 16px;
+      cursor: pointer;
     }
   </style>
 
@@ -36,8 +40,10 @@
     <body xmlns="http://www.w3.org/1999/xhtml">
       <h1>Bazinga Games</h1>
 
-      <!-- Controls: search input -->
+      <!-- Controls: scroll buttons + search -->
       <div class="controls">
+        <button onclick="document.getElementById('links').scrollBy(0, -100)">Up</button>
+        <button onclick="document.getElementById('links').scrollBy(0, 100)">Down</button>
         <label for="searchInput">Search:</label>
         <input type="text" id="searchInput" placeholder="Type to filter games..." />
       </div>
