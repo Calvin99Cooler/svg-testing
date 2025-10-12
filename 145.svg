@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+  <style>
+    svg { font-family: Arial, sans-serif; font-size: 16px; }
+    a { color: blue; text-decoration: underline; cursor: pointer; display: block; margin: 2px 0; }
+    a:hover { color: #551A8B; }
+    a:visited { color: #309ef2; }
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 10px;
+      box-sizing: border-box;
+      height: 80vh;
+      overflow-y: auto; /* enable vertical scrolling */
+      border: 1px solid #ccc;
+    }
+    h1 { font-size: 28px; margin: 0 0 12px 0; color: black; }
+    input {
+      padding: 5px 8px;
+      font-size: 16px;
+      width: 250px;
+      margin-left: 10px;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+    .controls label { font-weight: bold; }
+  </style>
+
+  <foreignObject x="0" y="0" width="100%" height="100%">
+    <body xmlns="http://www.w3.org/1999/xhtml">
+      <h1>Bazinga Games</h1>
+
+      <!-- Controls with only search -->
+      <div class="controls">
+        <label for="searchInput">Search:</label>
+        <input type="text" id="searchInput" placeholder="Type to filter games..." />
+      </div>
+
+      <!-- Links container -->
+      <div id="links" class="container"></div>
+
+      <!-- Script with CDATA -->
+      <script type="text/javascript"><![CDATA[
+        // First load reload script
+        (function(){
+          if(window.localStorage){
+            if(!localStorage.getItem('firstLoad')){
+              localStorage['firstLoad']=true;
+              location.reload();
+            } else localStorage.removeItem('firstLoad');
+          }
+        })();
+
+        // Main games loader
+        window.onload = async function() {
+          const container = document.getElementById('links');
+          const RAW_JSON = "https://raw.githubusercontent.com/Calvin99Cooler/never/main/zones.json";
+          const HTML_URL_BASE = "https://cdn.jsdelivr.net/gh/Calvin99Cooler/html@refs/heads/main/";
+
+          function escapeHTML(str){
+            return str.replace(/&/g,'&amp;')
+                      .replace(/</g,'&lt;')
+                      .replace(/>/g,'&gt;')
+                      .replace(/"/g,'&quot;')
+                      .replace(/'/g,'&#39;');
+          }
+
+          try {
+            const response = await fetch(RAW_JSON + "?t=" + Date.now());
+            const zones = await response.json();
+
+            function renderLinks(filter='') {
+              container.innerHTML = '';
+              zones.filter(z => z.name.toLowerCase().includes(filter.toLowerCase()))
+                   .forEach(zone => {
+                const link = document.createElement('a');
+                link.textContent = escapeHTML(zone.name);
+                link.href = '#';
+                link.addEventListener('click', async e => {
+                  e.preventDefault();
+                  let url = zone.url.replace('{HTML_URL}', HTML_URL_BASE);
+                  url = escapeHTML(url);
+
+                  const isExternal = url.startsWith('http') && !url.includes('cdn.jsdelivr.net/gh/Calvin99Cooler/html');
+                  if(isExternal){ window.open(url,'_blank'); return; }
+
+                  try {
+                    const htmlText = await fetch(url + "?t=" + Date.now()).then(r=>r.text());
+                    const newTab = window.open('about:blank','_blank');
+                    newTab.document.write(htmlText);
+                    newTab.document.close();
+                  } catch(err){ alert('Could not load HTML: '+url); }
+                });
+                container.appendChild(link);
+              });
+            }
+
+            renderLinks();
+            document.getElementById('searchInput').addEventListener('input', e => renderLinks(e.target.value));
+
+          } catch(e) {
+            const errorMsg = document.createElement('div');
+            errorMsg.textContent = 'Failed to load games.';
+            errorMsg.style.color='red';
+            container.appendChild(errorMsg);
+            console.error(e);
+          }
+        };
+      ]]></script>
+    </body>
+  </foreignObject>
+</svg>
