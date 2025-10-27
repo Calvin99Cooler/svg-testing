@@ -75,9 +75,9 @@
         window.onload = async function() {
           const container = document.getElementById('links');
           const aboveTextDiv = document.getElementById('aboveText');
-          const RAW_JSON = "https://raw.githubusercontent.com/Calvin99Cooler/never/main/zones.json";
-          const ABOVE_TEXT_JSON = "https://raw.githubusercontent.com/Calvin99Cooler/never/main/above-text.json";
-          const HTML_URL_BASE = "https://cdn.jsdelivr.net/gh/Calvin99Cooler/html@refs/heads/main/";
+          const RAW_JSON = "https://raw.githubusercontent.com/Calvin99Cooler/bazinga-games/main/single-html/zones.json";
+          const ABOVE_TEXT_JSON = "https://raw.githubusercontent.com/Calvin99Cooler/svg-testing/main/above-text.json";
+          const HTML_URL_BASE = "https://cdn.jsdelivr.net/gh/Calvin99Cooler/bazinga-games@main/single-html/";
 
           // Load the above-text.json
           try {
